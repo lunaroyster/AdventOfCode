@@ -50,7 +50,31 @@ namespace AdventOfCode
             }
             Console.WriteLine("The final floor is: " + FloorNumber);
             Console.ReadKey();
-            return 0;
+            return FloorNumber;
         }
+
+        public int Wrap()
+        {
+            int WrapArea = 0;
+            string input = "1x2x2";
+            int x = Convert.ToInt32(input.Split('x')[0]);
+            int y = Convert.ToInt32(input.Split('x')[1]);
+            int z = Convert.ToInt32(input.Split('x')[2]);
+
+            int SurfaceXY = x * y;
+            int SurfaceYZ = y * z;
+            int SurfaceZX = z * x;
+
+            int TotalSurfaceArea = 2 * (SurfaceXY + SurfaceYZ + SurfaceZX);
+
+            int FlapArea = 0;
+            FlapArea = (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) < SurfaceZX ? (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) : SurfaceZX;
+
+            WrapArea = TotalSurfaceArea + FlapArea;
+        
+
+            return WrapArea;
+        }
+
     }
 }
