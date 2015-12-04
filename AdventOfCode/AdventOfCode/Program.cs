@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Net;
 
 namespace AdventOfCode
 {
@@ -55,8 +56,9 @@ namespace AdventOfCode
 
         public int Wrap()
         {
+            MessageBox.Show(GetStringFromUrl("http://adventofcode.com/day/2/input"));
             int WrapArea = 0;
-            string input = "1x2x2";
+            string input = null;
             int x = Convert.ToInt32(input.Split('x')[0]);
             int y = Convert.ToInt32(input.Split('x')[1]);
             int z = Convert.ToInt32(input.Split('x')[2]);
@@ -74,6 +76,12 @@ namespace AdventOfCode
         
 
             return WrapArea;
+        }
+
+        public string GetStringFromUrl(string url)
+        {
+            WebClient WC = new WebClient();
+            return WC.DownloadString(url);
         }
 
     }
