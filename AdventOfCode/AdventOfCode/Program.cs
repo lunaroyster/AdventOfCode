@@ -66,6 +66,8 @@ namespace AdventOfCode
         {
             
             int WrapArea = 0;
+            int RibbonPerimeter = 0;
+            int RibbonBow = 0;
             string input = GetStringFromUrl("https://raw.githubusercontent.com/lunaroyster/AdventOfCode/master/AdventOfCode/Wrap");
             using (StringReader Reader = new StringReader(input))
             {
@@ -83,13 +85,16 @@ namespace AdventOfCode
                     int TotalSurfaceArea = 2 * (SurfaceXY + SurfaceYZ + SurfaceZX);
 
                     int FlapArea = 0;
-                    FlapArea = (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) < SurfaceZX ? (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) : SurfaceZX;
+                    FlapArea = SmallestOfTheThree(SurfaceXY, SurfaceYZ, SurfaceZX);
 
+                    RibbonPerimeter += (2 * ((x + y+ z) - LargestOfTheThree(x, y, z)));
+                    RibbonBow += (x*y*z);
                     WrapArea += TotalSurfaceArea + FlapArea;
                     Console.WriteLine(dimension + " " + WrapArea);
                 }
             }
             Console.WriteLine("The final Wrap Area is: " + WrapArea);
+            Console.WriteLine("Total Ribbon Length is: " + (RibbonBow + RibbonPerimeter));
             Console.ReadKey();
             return WrapArea;
         }
@@ -98,6 +103,20 @@ namespace AdventOfCode
         {
             WebClient WC = new WebClient();
             return WC.DownloadString(url);
+        }
+
+        public int SmallestOfTheThree(int x, int y, int z)
+        {
+            int SubSmallest = (x < y ? x : y);
+            int Smallest = SubSmallest < z ? SubSmallest : z;
+            return Smallest;
+        }
+        
+        public int LargestOfTheThree(int x, int y, int z)
+        {
+            int SubLargest = (x > y ? x : y);
+            int Largest = SubLargest > z ? SubLargest : z;
+            return Largest;
         }
 
     }
