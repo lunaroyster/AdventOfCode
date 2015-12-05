@@ -66,8 +66,8 @@ namespace AdventOfCode
         {
             
             int WrapArea = 0;
-            int RibbonPerimeter = 0;
-            int RibbonBow = 0;
+            int TotalRibbonPerimeter = 0;
+            int TotalRibbonBow = 0;
             string input = GetStringFromUrl("https://raw.githubusercontent.com/lunaroyster/AdventOfCode/master/AdventOfCode/Wrap");
             using (StringReader Reader = new StringReader(input))
             {
@@ -87,17 +87,21 @@ namespace AdventOfCode
                     int FlapArea = 0;
                     FlapArea = SmallestOfTheThree(SurfaceXY, SurfaceYZ, SurfaceZX);
 
-                    RibbonPerimeter += (2 * ((x + y+ z) - LargestOfTheThree(x, y, z)));
-                    RibbonBow += (x*y*z);
+                    int RibbonPerimeter = (2 * ((x + y + z) - LargestOfTheThree(x, y, z)));
+                    int RibbonBow = (x*y*z);
+                    TotalRibbonPerimeter += RibbonPerimeter;
+                    TotalRibbonBow += RibbonBow;
                     WrapArea += TotalSurfaceArea + FlapArea;
-                    Console.WriteLine(dimension + " " + WrapArea);
+                    
+                    Console.WriteLine(dimension + "   \t" + (TotalSurfaceArea + FlapArea) + "   \t" + (RibbonBow + RibbonPerimeter));
                 }
             }
             Console.WriteLine("The final Wrap Area is: " + WrapArea);
-            Console.WriteLine("Total Ribbon Length is: " + (RibbonBow + RibbonPerimeter));
+            Console.WriteLine("Total Ribbon Length is: " + (TotalRibbonBow + TotalRibbonPerimeter));
             Console.ReadKey();
             return WrapArea;
         }
+
 
         public string GetStringFromUrl(string url)
         {
