@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows.Forms;
+using System.IO;
 using System.Net;
 
 namespace AdventOfCode
@@ -59,22 +60,30 @@ namespace AdventOfCode
             
             int WrapArea = 0;
             string input = GetStringFromUrl("https://raw.githubusercontent.com/lunaroyster/AdventOfCode/master/AdventOfCode/Wrap");
-            int x = Convert.ToInt32(input.Split('x')[0]);
-            int y = Convert.ToInt32(input.Split('x')[1]);
-            int z = Convert.ToInt32(input.Split('x')[2]);
+            using (StringReader Reader = new StringReader(input))
+            {
+                string dimension;
+                while ((dimension = Reader.ReadLine()) != null)
+                {
+                    int x = Convert.ToInt32(dimension.Split('x')[0]);
+                    int y = Convert.ToInt32(dimension.Split('x')[1]);
+                    int z = Convert.ToInt32(dimension.Split('x')[2]);
 
-            int SurfaceXY = x * y;
-            int SurfaceYZ = y * z;
-            int SurfaceZX = z * x;
+                    int SurfaceXY = x * y;
+                    int SurfaceYZ = y * z;
+                    int SurfaceZX = z * x;
 
-            int TotalSurfaceArea = 2 * (SurfaceXY + SurfaceYZ + SurfaceZX);
+                    int TotalSurfaceArea = 2 * (SurfaceXY + SurfaceYZ + SurfaceZX);
 
-            int FlapArea = 0;
-            FlapArea = (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) < SurfaceZX ? (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) : SurfaceZX;
+                    int FlapArea = 0;
+                    FlapArea = (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) < SurfaceZX ? (SurfaceXY < SurfaceYZ ? SurfaceXY : SurfaceYZ) : SurfaceZX;
 
-            WrapArea = TotalSurfaceArea + FlapArea;
-        
-
+                    WrapArea += TotalSurfaceArea + FlapArea;
+                    Console.WriteLine(dimension + " " + WrapArea);
+                }
+            }
+            Console.WriteLine("The final Wrap Area is: " + WrapArea);
+            Console.ReadKey();
             return WrapArea;
         }
 
