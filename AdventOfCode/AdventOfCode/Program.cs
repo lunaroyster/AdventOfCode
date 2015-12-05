@@ -56,9 +56,9 @@ namespace AdventOfCode
 
         public int Wrap()
         {
-            MessageBox.Show(GetStringFromUrl("http://adventofcode.com/day/2/input"));
+            
             int WrapArea = 0;
-            string input = null;
+            string input = GetStringFromUrl("https://raw.githubusercontent.com/lunaroyster/AdventOfCode/master/AdventOfCode/Wrap");
             int x = Convert.ToInt32(input.Split('x')[0]);
             int y = Convert.ToInt32(input.Split('x')[1]);
             int z = Convert.ToInt32(input.Split('x')[2]);
