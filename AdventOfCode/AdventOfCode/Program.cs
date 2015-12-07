@@ -120,6 +120,13 @@ namespace AdventOfCode
                 return EndowedHouses;
         }
 
+        public int Bye()
+        {
+            Console.WriteLine("Really?");
+            if (Console.ReadLine() == "ja") { Application.Exit(); }
+            return 0;
+        }
+
         public string GetStringFromUrl(string url)
         {
             WebClient WC = new WebClient();
