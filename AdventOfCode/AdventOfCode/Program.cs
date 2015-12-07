@@ -102,6 +102,23 @@ namespace AdventOfCode
             return WrapArea;
         }
 
+        public int Roam()
+        {
+            int EndowedHouses = 0;
+            string input = GetStringFromUrl("https://raw.githubusercontent.com/lunaroyster/AdventOfCode/master/AdventOfCode/Roam");
+
+            for (int i = 0; i <= (input.Length - 1); i++)
+            {
+                Console.WriteLine(input[i].ToString());
+
+
+            }
+                //get the req variables
+                //loop through the string
+                //move and deliver in each required variable
+                //count the number of variables which are not equal to 0
+                return EndowedHouses;
+        }
 
         public string GetStringFromUrl(string url)
         {
