@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 
 namespace AdventOfCode
 {
@@ -110,7 +111,7 @@ namespace AdventOfCode
             for (int i = 0; i <= (input.Length - 1); i++)
             {
                 Console.WriteLine(input[i].ToString());
-
+                
 
             }
                 //get the req variables
@@ -120,11 +121,55 @@ namespace AdventOfCode
                 return EndowedHouses;
         }
 
+        public string Hash()
+        {
+            string OutputRaw = null;
+            string OutputHash = null;
+
+            Console.WriteLine("Input letters");
+            string input = Console.ReadLine();
+
+            Console.WriteLine("Hash Mask");
+            string mask = Console.ReadLine();
+
+            Console.WriteLine(input + mask + mask.Length.ToString());
+            Console.ReadLine();
+            for (uint i = 0; i<uint.MaxValue; i++)
+            {
+                string raw = input + i.ToString();
+                string hash = GetMD5(raw);
+                //Console.WriteLine(raw + ": " + hash);
+                if (hash.Substring(0, mask.Length) == mask)
+                {
+                    OutputRaw = raw;
+                    OutputHash = hash;
+                    
+                    break;
+                }                
+            }
+            Console.WriteLine("Answer: " + OutputRaw + " " + OutputHash);
+            return OutputRaw;
+        }
+
         public int Bye()
         {
             Console.WriteLine("Really?");
             if (Console.ReadLine() == "ja") { Application.Exit(); }
             return 0;
+        }
+
+        public string GetMD5(string input)
+        {
+            using (MD5 gen = MD5.Create())
+            {
+                byte[] data = gen.ComputeHash(Encoding.UTF8.GetBytes(input));
+                StringBuilder SBHash = new StringBuilder();
+                for (int i = 0; i < data.Length; i++)
+                {
+                    SBHash.Append(data[i].ToString("x2"));
+                }
+                return SBHash.ToString();
+            }
         }
 
         public string GetStringFromUrl(string url)
