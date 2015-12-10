@@ -151,6 +151,52 @@ namespace AdventOfCode
             return OutputRaw;
         }
 
+        public int String()
+        {
+            int NiceStringCount = 0;
+            string input = GetStringFromUrl("https://raw.githubusercontent.com/lunaroyster/AdventOfCode/master/AdventOfCode/String");
+            //string input = "aeiou"; //debug input
+            using (StringReader Reader = new StringReader(input))
+            {
+                string CurrentString;
+                while ((CurrentString = Reader.ReadLine()) != null)
+                {
+                    bool VovelTest = false, RepeatLetterTest = false, NoDisallowedStringTest = true;
+                    int VovelCount = 0;
+                    for (int i = 0; i < (CurrentString.Length - 1); i++)
+                    {
+                        //Repeat Letter Test
+                        char C = CurrentString[i];
+                        string ConcString = CurrentString[i].ToString() + CurrentString[i + 1].ToString();
+                        if (ConcString[0] == ConcString[1]) { RepeatLetterTest = true; } 
+                        if (ConcString == "ab" || ConcString == "cd" || ConcString == "pq" || ConcString == "xy") { NoDisallowedStringTest = false; } 
+                        if (IsVovel(C)) { VovelCount++; }   
+                                     
+                    }
+                    if (IsVovel(CurrentString[CurrentString.Length - 1])) { VovelCount++; }
+                    if (VovelCount >= 3) { VovelTest = true; }
+
+                    if (VovelTest == true && RepeatLetterTest == true && NoDisallowedStringTest == false) { NiceStringCount++; }
+                    Console.WriteLine(VovelCount.ToString());
+                }
+                Console.WriteLine(NiceStringCount);
+            }
+
+                return NiceStringCount;
+        }
+
+        public bool IsVovel(Char C)
+        {
+            if (C == 'a' || C == 'e' || C == 'i' || C == 'o' || C == 'u')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public int Bye()
         {
             Console.WriteLine("Really?");
