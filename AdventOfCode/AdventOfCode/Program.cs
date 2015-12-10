@@ -18,12 +18,21 @@ namespace AdventOfCode
 
             do
             {
-                string MET = Console.ReadLine();
-                Type RT = typeof(Routine);
-                MethodInfo theMethod = RT.GetMethod(MET);
-                Routine R = new Routine();
-                theMethod.Invoke(R, null);
-                
+                try
+                {
+                    string MET = Console.ReadLine();
+                    Type RT = typeof(Routine);
+                    MethodInfo theMethod = RT.GetMethod(MET);
+                    Routine R = new Routine();
+                    theMethod.Invoke(R, null);
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine(ex.Message);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }
+
             } while (true);
         }
     }
@@ -155,7 +164,7 @@ namespace AdventOfCode
         {
             int NiceStringCount = 0;
             string input = GetStringFromUrl("https://raw.githubusercontent.com/lunaroyster/AdventOfCode/master/AdventOfCode/String");
-            //string input = "aeiou"; //debug input
+            //string input = "ahbbeio"; //debug input
             using (StringReader Reader = new StringReader(input))
             {
                 string CurrentString;
@@ -176,7 +185,7 @@ namespace AdventOfCode
                     if (IsVovel(CurrentString[CurrentString.Length - 1])) { VovelCount++; }
                     if (VovelCount >= 3) { VovelTest = true; }
 
-                    if (VovelTest == true && RepeatLetterTest == true && NoDisallowedStringTest == false) { NiceStringCount++; }
+                    if (VovelTest == true && RepeatLetterTest == true && NoDisallowedStringTest == true) { NiceStringCount++; }
                     Console.WriteLine(VovelCount.ToString());
                 }
                 Console.WriteLine(NiceStringCount);
